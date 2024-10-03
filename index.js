@@ -1,7 +1,6 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const generateMarkdown = require('./utils/generateMarkdown');
-const { type } = require('os');
 const fs = require('fs').promises;
 
 const licenses = [
@@ -25,43 +24,51 @@ const questions = () => {
     {
         type: 'input',
         name: 'title',
-        message: 'Enter your title for your ReadMe'
+        message: 'Enter your project title: ',
     },
     {
         type: 'input',
         name: 'description',
-        message: 'Enter your ReadMe description'
+        message: 'Enter project description: ',
     },
     {
         type: 'input',
-        name: 'install',
-        message: 'Enter your installation instructions'
+        name: 'installation',
+        message: 'Enter installation instructions: ',
+    },
+    {
+        type: 'input',
+        name: 'usage',
+        message: 'Enter usage instructions: ',
     },
     {
         type: 'list',
         name: 'license',
-        message: 'Select license type',
-        choices: licenses
+        message: 'Select license type: ',
+        choices: licenses,
     },
     {
         type: 'input',
-        name: 'command',
-        message: 'Enter your start command for your ReadMe'
+        name: 'contributing',
+        message: 'Explain how others can contribute to your project: ',
+    },
+    {
+        type: 'input',
+        name:'tests',
+        message: 'Explain how others can test your project: ',
+    },
+    {
+        type: 'input',
+        name: 'github',
+        message: 'Enter the link to your GitHub repository: ',
     },
     {
         type: 'input',
         name: 'email',
-        message: 'Enter your email'
-    }, 
+        message: 'Enter your email: ',
+    },
  ])
 };
-
-//enter proj titile
-//enter proj desc
-//enter install instruct
-//select license type
-//command to run project
-//enter email
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
@@ -73,7 +80,7 @@ function writeToFile(fileName, data) {
 // TODO: Create a function to initialize app
 function init() {
     questions()
-    .then((answer) => writeToFile('ReadMe.md' , generateMarkdown(answer, licenses)))
+    .then((answers) => writeToFile('README.md', generateMarkdown(answers, licenses)))
     .then(() => console.log("Answers added to ReadMe"))
     .catch((err) => console.log(err));
 }
